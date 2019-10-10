@@ -19,7 +19,7 @@ class ImageResize{
 	}
 	ImageResize app = new ImageResize();
 	if(args[0].equals("resize")){
-	    if(app.resize(args[1], args[2], Integer.parseInt(args[3]), Integer.parseInt(args[4]))){
+	    if(app.resize(args[1], args[2], Integer.parseInt(args[3]), Integer.parseInt(args[4]),args[5])){
 		System.out.println(args[2]);
 	    }
 	    else{
@@ -45,7 +45,7 @@ class ImageResize{
 	}
     }
 
-    public boolean resize(String fname_in, String fname_out, int max_width, int max_height){
+    public boolean resize(String fname_in, String fname_out, int max_width, int max_height, String resize_type){
 	System.out.println(fname_in);
 	BufferedImage img = null;
 	try {
@@ -66,11 +66,31 @@ class ImageResize{
 	    height = img.getHeight() * max_width / img.getWidth();
 	}
 	System.out.println(img.getWidth() + "x" +img.getHeight() + " => " + width + "x" + height);
-	
+
+	int resize_type_int = AffineTransformOp.TYPE_NEAREST_NEIGHBOR;
+	switch (resize_type.toLowerCase()){
+		case "nearest neighbor":
+			resize_type_int=AffineTransformOp.TYPE_NEAREST_NEIGHBOR;
+			System.out.println("Using Nearest Neighbor");
+			break;
+		case "bilinear":
+			resize_type_int=AffineTransformOp.TYPE_BILINEAR;
+			System.out.println("Using Bilinear");
+			break;
+		case "bicubic":
+			resize_type_int=AffineTransformOp.TYPE_BICUBIC;
+			System.out.println("Using Bicubic");
+			break;
+		default:
+			resize_type_int=AffineTransformOp.TYPE_NEAREST_NEIGHBOR;
+			System.out.println("Defaulting to Nearest Neighbor");
+	}
+
+
 	BufferedImage img_resized = new BufferedImage(width, height, img.getType());
 	AffineTransformOp ato = new AffineTransformOp(AffineTransform.getScaleInstance((double)width / img.getWidth(), 
 										       (double)height / img.getHeight()), 
-						      null);
+						      resize_type_int);
 	ato.filter(img, img_resized);
 	
 
