@@ -3,6 +3,8 @@ import java.io.*;
 import java.awt.image.*;
 import java.awt.geom.*;
 import java.awt.image.*;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.regex.*;
 
 class ImageResize{
@@ -94,10 +96,14 @@ class ImageResize{
 
 
 	BufferedImage img_resized = new BufferedImage(width, height, img.getType());
-	AffineTransformOp ato = new AffineTransformOp(AffineTransform.getScaleInstance((double)width / img.getWidth(), 
-										       (double)height / img.getHeight()), 
-						      resize_type_int);
-	ato.filter(img, img_resized);
+
+	Graphics2D g2d = img_resized.createGraphics();
+	g2d.drawImage(img, 0, 0, width, height, null);
+	g2d.dispose();
+	//AffineTransformOp ato = new AffineTransformOp(AffineTransform.getScaleInstance((double)width / img.getWidth(),
+	//									       (double)height / img.getHeight()),
+	//					      resize_type_int);
+	//ato.filter(img, img_resized);
 	
 
 	String format = Pattern.compile("^.+\\.(.+)$").matcher(fname_out).replaceAll("$1");
