@@ -13,8 +13,14 @@ class ImageResize{
     public static void main(String args[]){
 	if(!(( args.length == 6 && args[0].equals("resize") ) ||
 	     ( args.length == 1 && args[0].equals("formats") ))){
+		System.out.println("Proper usage:");
 	    System.out.println("ImageResize resize in.jpg out.jpg 320 320");
 	    System.out.println("ImageResize formats");
+	    String concatArgs = "";
+		for (String arg:args) {
+			concatArgs+=arg+" ";
+		}
+	    System.out.println("Your Args ("+args.length+") were:" + concatArgs);
 	    System.exit(1);
 	}
 	ImageResize app = new ImageResize();
