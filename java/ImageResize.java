@@ -4,6 +4,7 @@ import java.awt.image.*;
 import java.awt.geom.*;
 import java.awt.image.*;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.regex.*;
 
@@ -13,10 +14,10 @@ class ImageResize{
     }
 
     public static void main(String args[]){
-	if(!(( args.length == 6 && args[0].equals("resize") ) ||
+	if(!(( args.length == 5 && args[0].equals("resize") ) ||
 	     ( args.length == 1 && args[0].equals("formats") ))){
 		System.out.println("Proper usage:");
-	    System.out.println("ImageResize resize in.jpg out.jpg 320 320 bicubic");
+	    System.out.println("ImageResize resize in.jpg out.jpg 320 320");
 	    System.out.println("ImageResize formats");
 	    String concatArgs = "";
 		for (String arg:args) {
@@ -27,7 +28,7 @@ class ImageResize{
 	}
 	ImageResize app = new ImageResize();
 	if(args[0].equals("resize")){
-	    if(app.resize(args[1], args[2], Integer.parseInt(args[3]), Integer.parseInt(args[4]),args[5])){
+	    if(app.resize(args[1], args[2], Integer.parseInt(args[3]), Integer.parseInt(args[4]))){
 		System.out.println(args[2]);
 	    }
 	    else{
@@ -53,7 +54,7 @@ class ImageResize{
 	}
     }
 
-    public boolean resize(String fname_in, String fname_out, int max_width, int max_height, String resize_type){
+    public boolean resize(String fname_in, String fname_out, int max_width, int max_height){
 	System.out.println(fname_in);
 	BufferedImage img = null;
 	try {
@@ -75,30 +76,17 @@ class ImageResize{
 	}
 	System.out.println(img.getWidth() + "x" +img.getHeight() + " => " + width + "x" + height);
 
-	int resize_type_int = AffineTransformOp.TYPE_NEAREST_NEIGHBOR;
-	switch (resize_type.toLowerCase()){
-		case "nearest neighbor":
-			resize_type_int=AffineTransformOp.TYPE_NEAREST_NEIGHBOR;
-			System.out.println("Using Nearest Neighbor");
-			break;
-		case "bilinear":
-			resize_type_int=AffineTransformOp.TYPE_BILINEAR;
-			System.out.println("Using Bilinear");
-			break;
-		case "bicubic":
-			resize_type_int=AffineTransformOp.TYPE_BICUBIC;
-			System.out.println("Using Bicubic");
-			break;
-		default:
-			resize_type_int=AffineTransformOp.TYPE_NEAREST_NEIGHBOR;
-			System.out.println("Defaulting to Nearest Neighbor");
-	}
-
 	BufferedImage img_resized = new BufferedImage(width, height, img.getType());
 
 	Graphics2D g2d = img_resized.createGraphics();
-	g2d.drawImage(img.getScaledInstance(width,height,java.awt.mage.SCALE_SMOOTH), 0, 0, width, height, null);
+	g2d.drawImage(img.getScaledInstance(width,height,java.awt.Image.SCALE_SMOOTH), 0, 0, width, height, null);
 	g2d.dispose();
+	g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+				RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+	g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
+				RenderingHints.VALUE_RENDER_QUALITY);
+	g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
 	//AffineTransformOp ato = new AffineTransformOp(AffineTransform.getScaleInstance((double)width / img.getWidth(),
 	//									       (double)height / img.getHeight()),
 	//					      resize_type_int);
