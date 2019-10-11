@@ -10,8 +10,8 @@ module Image
     "java -jar #{resizer}"
   end
   
-  def Image.resize(img_in, img_out, width, height,resize_type)
-    puts `#{Image.cmd} resize "#{img_in}" "#{img_out}" #{width} #{height} "#{resize_type}"`
+  def Image.resize(img_in, img_out, width, height)
+    puts `#{Image.cmd} resize "#{img_in}" "#{img_out}" #{width} #{height}`
   end
 
   def Image.formats
