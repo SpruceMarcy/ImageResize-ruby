@@ -4,5 +4,5 @@ $:.unshift(File.dirname(__FILE__)) unless
 require 'ImageResize/Image'
 
 module ImageResize
-  VERSION = '0.1.0cd mb0'
+  VERSION = '0.1.1'
 end
