@@ -94,11 +94,10 @@ class ImageResize{
 			System.out.println("Defaulting to Nearest Neighbor");
 	}
 
-
 	BufferedImage img_resized = new BufferedImage(width, height, img.getType());
 
 	Graphics2D g2d = img_resized.createGraphics();
-	g2d.drawImage(img, 0, 0, width, height, null);
+	g2d.drawImage(img.getScaledInstance(width,height,java.awt.mage.SCALE_SMOOTH), 0, 0, width, height, null);
 	g2d.dispose();
 	//AffineTransformOp ato = new AffineTransformOp(AffineTransform.getScaleInstance((double)width / img.getWidth(),
 	//									       (double)height / img.getHeight()),

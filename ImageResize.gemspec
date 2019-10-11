@@ -1,9 +1,9 @@
 Gem::Specification.new do |s|
   s.name = "ImageResize"
-  s.version = "0.0.8"
+  s.version = "0.0.9"
   s.date = %q{2019-10-10}
   s.summary = %q{An all-inclusive image resizer}
-  s.files = `git ls-files`.split($/) - ["ImageResize-0.0.8.gem"]
+  s.files = `git ls-files`.split($/) - ["ImageResize-0.0.9.gem"]
   s.authors     = ["Sho Hashimoto","Marceline Brook"]
   s.require_paths = ["lib"]
 end
