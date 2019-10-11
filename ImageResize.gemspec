@@ -3,7 +3,7 @@ Gem::Specification.new do |s|
   s.version = "0.0.6"
   s.date = %q{2019-10-10}
   s.summary = %q{An all-inclusive image resizer}
-  s.files = ["lib/ImageResize.rb","lib/ImageResize/Image.rb","java/ImageResize.jar"]
+  s.files = ["lib/ImageResize.rb","lib/ImageResize/Image.rb","java/"]
   s.authors     = ["Sho Hashimoto","Marceline Brook"]
   s.require_paths = ["lib"]
 end
